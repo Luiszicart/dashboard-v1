@@ -17,5 +17,22 @@ export const StyledInput = styled.input`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+
+    &::-webkit-calendar-picker-indicator {
+      opacity: 1;
+    }
+
+    &::-webkit-datetime-edit-fields-wrapper {
+      padding: 0;
+    }
+
+    &[max]:invalid {
+      color: ${({ theme }) => theme.colors.muted};
+    }
+  }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.muted};
+    cursor: not-allowed;
   }
 `;
