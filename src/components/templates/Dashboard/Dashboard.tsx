@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import {
@@ -10,6 +10,7 @@ import DateRangePicker from "../../molecules/DateRangePicker/DateRangePicker";
 import TransactionTable from "../../organisms/TransactionTable/TransactionTable";
 import Button from "../../atoms/Button/Button";
 import { mockTransactions } from "../../../services/api/transaction";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   DashboardContainer,
   Header,
@@ -23,10 +24,14 @@ import {
   Pagination,
   PageInfo,
 } from "./Dashboard.styled";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [dateError, setDateError] = useState<string | null>(null);
+  const [localDateRange, setLocalDateRange] = useState({
+    startDate: null as string | null,
+    endDate: null as string | null,
+  });
   const {
     loading,
     error,
@@ -68,10 +73,17 @@ const Dashboard = () => {
     startDate: string | null,
     endDate: string | null
   ) => {
-    dispatch(setDateRange({ startDate, endDate }));
+    setLocalDateRange({ startDate, endDate });
+
+    // Only update Redux if we have both dates or neither date, and no error
+    if ((!startDate && !endDate) || (startDate && endDate && !dateError)) {
+      dispatch(setDateRange({ startDate, endDate }));
+    }
   };
 
   const handleClearDateRange = () => {
+    setDateError(null);
+    setLocalDateRange({ startDate: null, endDate: null });
     dispatch(setDateRange({ startDate: null, endDate: null }));
   };
 
@@ -87,17 +99,21 @@ const Dashboard = () => {
 
       <FilterSection>
         <DateRangePicker
-          startDate={dateRange.startDate || ""}
-          endDate={dateRange.endDate || ""}
+          startDate={localDateRange.startDate || ""}
+          endDate={localDateRange.endDate || ""}
           onStartDateChange={(date) =>
-            handleDateRangeChange(date, dateRange.endDate)
+            handleDateRangeChange(date, localDateRange.endDate)
           }
           onEndDateChange={(date) =>
-            handleDateRangeChange(dateRange.startDate, date)
+            handleDateRangeChange(localDateRange.startDate, date)
           }
           onClear={handleClearDateRange}
+          onError={setDateError}
         />
       </FilterSection>
+
+      {dateError && <ErrorMessage>{dateError}</ErrorMessage>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
 
       <Summary>
         <SummaryCard>
@@ -109,8 +125,6 @@ const Dashboard = () => {
           <SummaryValue>${totalAmount.toFixed(2)}</SummaryValue>
         </SummaryCard>
       </Summary>
-
-      {error && <ErrorMessage>{error}</ErrorMessage>}
 
       <TransactionTable />
 

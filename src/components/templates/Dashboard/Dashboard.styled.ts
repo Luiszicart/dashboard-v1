@@ -41,7 +41,13 @@ export const FilterSection = styled.div`
 export const ErrorMessage = styled.div`
   color: ${({ theme }) => theme.colors.error};
   text-align: center;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+  margin: 0 auto ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.md};
+  border: 1px solid ${({ theme }) => theme.colors.error};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background-color: ${({ theme }) => theme.colors.background};
+  max-width: 400px;
+  width: 100%;
 `;
 
 export const Summary = styled.div`
