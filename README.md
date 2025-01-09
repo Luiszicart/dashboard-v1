@@ -38,5 +38,13 @@ A comprehensive React dashboard application for managing and visualizing payment
 ## 🏗 Architecture
 
 ### Component Structure
-Following the Atomic Design Pattern:
+Following the Atomic Design Pattern
+
+### Preview:
+
+![peek_32](https://github.com/user-attachments/assets/5f586724-4433-4b26-a220-d93f011b05a1)
+
+![peek_33](https://github.com/user-attachments/assets/be7d3903-da58-4d10-868a-7aae6335d506)
+
+
 
