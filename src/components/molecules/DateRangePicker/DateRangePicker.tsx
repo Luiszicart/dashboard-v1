@@ -13,7 +13,39 @@ const DateRangePicker = ({
   onStartDateChange,
   onEndDateChange,
   onClear,
+  onError,
 }: DateRangePickerProps) => {
+  const today = new Date().toISOString().split("T")[0];
+
+  const validateDateRange = (newStartDate: string, newEndDate: string) => {
+    if (newStartDate && !newEndDate) {
+      onError("Please select an end date");
+      return;
+    }
+
+    if (newStartDate && newEndDate) {
+      const start = new Date(newStartDate);
+      const end = new Date(newEndDate);
+
+      if (end < start) {
+        onError("End date cannot be earlier than start date");
+        return;
+      }
+    }
+
+    onError(null);
+  };
+
+  const handleStartDateChange = (date: string) => {
+    onStartDateChange(date);
+    validateDateRange(date, endDate);
+  };
+
+  const handleEndDateChange = (date: string) => {
+    onEndDateChange(date);
+    validateDateRange(startDate, date);
+  };
+
   return (
     <DateRangeContainer>
       <DateInputGroup>
@@ -22,7 +54,8 @@ const DateRangePicker = ({
           type="date"
           id="start-date"
           value={startDate}
-          onChange={(e) => onStartDateChange(e.target.value)}
+          onChange={(e) => handleStartDateChange(e.target.value)}
+          max={today}
         />
       </DateInputGroup>
       <DateInputGroup>
@@ -31,7 +64,9 @@ const DateRangePicker = ({
           type="date"
           id="end-date"
           value={endDate}
-          onChange={(e) => onEndDateChange(e.target.value)}
+          onChange={(e) => handleEndDateChange(e.target.value)}
+          max={today}
+          min={startDate}
         />
       </DateInputGroup>
       <Button onClick={onClear} disabled={!startDate && !endDate}>

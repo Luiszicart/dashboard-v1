@@ -4,4 +4,5 @@ export interface DateRangePickerProps {
   onStartDateChange: (date: string) => void;
   onEndDateChange: (date: string) => void;
   onClear: () => void;
+  onError: (error: string | null) => void;
 }
