@@ -45,7 +45,7 @@ export const fetchTransactions = async ({
   total: number;
 }> => {
   // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
   // Filter by date range
   let filteredTransactions = [...mockTransactions];
