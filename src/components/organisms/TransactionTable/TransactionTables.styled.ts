@@ -12,6 +12,7 @@ export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   min-width: 600px;
+  font-family: ${({ theme }) => theme.typography.fontFamily};
 `;
 
 export const Th = styled.th`
@@ -21,6 +22,7 @@ export const Th = styled.th`
   border-bottom: 2px solid ${({ theme }) => theme.colors.border};
   font-weight: 600;
   white-space: nowrap;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
   @media (min-width: 640px) {
     padding: ${({ theme }) => theme.spacing.md};
@@ -30,6 +32,7 @@ export const Th = styled.th`
 export const Td = styled.td`
   padding: ${({ theme }) => theme.spacing.sm};
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
   @media (min-width: 640px) {
     padding: ${({ theme }) => theme.spacing.md};
@@ -41,17 +44,27 @@ export const SortButton = styled.button`
   border: none;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: ${({ theme }) => theme.spacing.xs};
   color: ${({ theme }) => theme.colors.text};
   font-weight: 600;
   cursor: pointer;
   padding: 0;
-  height: 100%;
-  vertical-align: middle;
-  white-space: nowrap;
+  height: 24px;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-  svg {
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    font-size: inherit;
+    font-family: inherit;
+  }
+
+  & > svg {
     display: inline-flex;
     vertical-align: middle;
   }

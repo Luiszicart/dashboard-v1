@@ -44,13 +44,15 @@ const TransactionTable = () => {
             <Th>Transaction ID</Th>
             <Th>
               <SortButton onClick={() => handleSort("date")}>
-                Date <SortIcon field="date" />
+                <span>Date</span>
+                <SortIcon field="date" />
               </SortButton>
             </Th>
             <Th>Description</Th>
             <Th>
               <SortButton onClick={() => handleSort("amount")}>
-                Amount <SortIcon field="amount" />
+                <span>Amount</span>
+                <SortIcon field="amount" />
               </SortButton>
             </Th>
           </tr>
